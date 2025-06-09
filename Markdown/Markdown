@@ -1,0 +1,101 @@
+# SkyBooker – Microservices-basierte Flugbuchungsplattform
+
+## Inhaltsverzeichnis
+- [SkyBooker – Microservices-basierte Flugbuchungsplattform](#skybooker--microservices-basierte-flugbuchungsplattform)
+  - [Inhaltsverzeichnis](#inhaltsverzeichnis)
+  - [1. Projektübersicht](#1-projektübersicht)
+  - [2. Logik \& Architektur](#2-logik--architektur)
+  - [3. Teamaufteilung \& Fortschritte](#3-teamaufteilung--fortschritte)
+    - [Mohamed Gebeili – AuthService (Port 8084)](#mohamed-gebeili--authservice-port-8084)
+    - [Edwin Gerlach – FlightService (Port 8082)](#edwin-gerlach--flightservice-port-8082)
+    - [Majd Bayeh – BookService (Port 8081)](#majd-bayeh--bookservice-port-8081)
+    - [GatewayAPI (Mohamed \& Majd)](#gatewayapi-mohamed--majd)
+  - [4. Demo \& Präsentation](#4-demo--präsentation)
+  - [5. Ausblick \& To-Do](#5-ausblick--to-do)
+
+
+
+![alt text](image-1.png)
+
+## 1. Projektübersicht
+
+SkyBooker ist eine globale Plattform zur Verwaltung und Buchung von Flügen. Ziel ist es, Fluggesellschaften und Passagieren eine moderne, skalierbare Lösung zu bieten – umgesetzt mit ASP.NET Core Microservices und Docker-Containern.
+
+## 2. Logik & Architektur
+
+* **Microservices**: Jeder Dienst ist eigenständig und übernimmt genau eine Aufgabe.
+* **Kommunikation**: Über ein API-Gateway (Ocelot), das alle Anfragen verteilt.
+* **Datenbanken**:
+
+  * AuthService → SQLite
+  * FlightService → PostgreSQL
+  * BookService → SQL Server
+* **Sicherheit**: JWT-Authentifizierung + Verschlüsselung personenbezogener Daten
+* **Deployment**: Jeder Service in Docker-Container, orchestriert per Docker Compose
+
+
+## 3. Teamaufteilung & Fortschritte
+
+### Mohamed Gebeili – AuthService (Port 8084)
+
+**Status: ✅ abgeschlossen**
+
+* Registrierung & Login mit Passwort-Hashing (BCrypt)
+* JWT-Token-Generierung & Absicherung mit `[Authorize]`
+* Unit Tests für alle Endpunkte
+* Swagger-Dokumentation
+* Dockerisierung noch nicht erfolgreich
+
+### Edwin Gerlach – FlightService (Port 8082)
+
+**Status: teilweise erledigt**
+
+| Aufgabe                       | Status       |
+| ----------------------------- | ------------ |
+| Projektsetup & DB-Modell      | ✅ Erledigt   |
+| API-Endpunkte (CRUD)          | ✅ Erledigt   |
+| JWT-Authentifizierung         | ✅ Erledigt   |
+| Swagger-Doku                  | ✅ Erledigt   |
+| Docker-Container              | ✅ Erledigt   |
+| Unit Tests                    | ❌ Ausstehend |
+| Postman-Tests & Erweiterungen | ❌ Ausstehend |
+
+### Majd Bayeh – BookService (Port 8081)
+
+**Status: ✅ abgeschlossen**
+
+* Endpunkte für Buchung erstellt (`POST`, `GET`, `GET/{id}`)
+* SQL Server Integration mit EF Core
+* Unit Tests mit xUnit erfolgreich
+* Docker-Image erstellt & getestet
+* Portkonflikt mit 8080 behoben (neu: 8081)
+
+### GatewayAPI (Mohamed & Majd)
+
+**Status: noch nicht fertig eingerichtet & getestet**
+
+* Ocelot-Routing in `ocelot.json` definiert
+* Dockerisiert auf Port 8083
+* Routing zu BookService funktioniert
+
+## 4. Demo & Präsentation
+
+Während der Präsentation demonstrieren wir:
+
+* **Registrierung & Login** mit AuthService
+* **Flugbuchung** via BookService über das Gateway
+* **JWT-Absicherung**: /me-Endpunkt nur mit Token aufrufbar
+* **Swagger UI** als Übersicht der API
+
+## 5. Ausblick & To-Do
+
+| Bereich                        | Status       |
+| ------------------------------ | ------------ |
+| Integrationstests mit Postman  | offen     |
+| Unit Tests für FlightService   | offen     |
+| Frontend-Anbindung an Gateway  | geplant  |
+| Verschlüsselung weiterer Daten | offen     |
+| CI/CD Pipeline (optional)      | später    |
+| Abschluss & Dokumentation      | in Arbeit |
+
+**Fazit:** SkyBooker basiert auf einem durchdachten, verteilten System mit klaren Zuständigkeiten. Die Basis steht – die nächsten Schritte dienen der finalen Integration und dem Feinschliff für eine praxistaugliche Lösung.

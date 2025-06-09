@@ -1,0 +1,22 @@
+services:
+  bookservice:
+    build:
+      context: ./BookService/BookService.API
+    ports:
+      - "8081:80"
+    networks:
+      - skybooker-net
+
+  gatewayapi:
+    build:
+      context: ./GatewayAPI/GatewayAPI
+    ports:
+      - "8083:8080"  # WICHTIG: App läuft auf Port 8080 laut deinen Logs
+    depends_on:
+      - bookservice
+    networks:
+      - skybooker-net
+
+networks:
+  skybooker-net:
+    driver: bridge
